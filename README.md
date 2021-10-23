@@ -1,6 +1,6 @@
 # Conversor
 
-Conversor de moedas
+Conversor de moedas em React JS
 
 ## Tarefas
 
@@ -12,6 +12,12 @@ o controle das tarefas desse projeto será realizado no GitHub
 :up:atualização
 :bug:correção de bug
 :checkered_flag:release
+
+## Dependencias
+
+axios
+react
+react-dom
 
 ## Photo by
 
