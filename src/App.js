@@ -17,16 +17,6 @@ function App() {
         <Conversor moedaA='EUR' moedaB='BRL' />
         <Conversor moedaA='BRL' moedaB='EUR' />
       </div>
-      <a>
-        Photo by
-        <a href='https://unsplash.com/@jjying?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'>
-          JJ Ying
-        </a>
-        on
-        <a href='https://unsplash.com/s/photos/abstract?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'>
-          Unsplash
-        </a>
-      </a>
     </div>
   );
 }
