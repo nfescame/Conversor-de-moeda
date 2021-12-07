@@ -30,6 +30,7 @@ export class Conversor extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className='conversor'>
         <h2>

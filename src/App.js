@@ -1,4 +1,3 @@
-import "./App.css";
 import Conversor from "./components/Conversor.jsx";
 
 function App() {
