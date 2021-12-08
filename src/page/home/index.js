@@ -17,11 +17,17 @@ export default function Home() {
     } else {
       setSelect2(e.target.value);
     }
+
+    setCurrency(`${select1}_${select2},${select2}_${select1}`);
+  }
+
+  function calculation() {
+    return <h1>{result * value}result</h1>;
   }
 
   return (
     <>
-      <h1>{result * value}result</h1>
+      {calculation()}
       <form
         className='container'
         style={{ width: "100%", border: "solid 1px black" }}
@@ -56,9 +62,6 @@ export default function Home() {
                 ? data.map((item) => {
                     return (
                       <>
-                        <option selected>
-                          {data[120].currencyName} ({data[120].id})
-                        </option>
                         <option key={item.id} value={item.id}>
                           {item.currencyName} ({item.id})
                         </option>
@@ -80,9 +83,6 @@ export default function Home() {
                 ? data.map((item) => {
                     return (
                       <>
-                        <option selected>
-                          {data[8].currencyName} ({data[8].id})
-                        </option>
                         <option key={item.id} value={item.id}>
                           {item.currencyName} ({item.id})
                         </option>
@@ -95,9 +95,9 @@ export default function Home() {
         </div>
 
         <button
-          onClick={() =>
-            setCurrency(`${select2}_${select1},${select1}_${select2}`)
-          }
+          onClick={() => {
+            calculation();
+          }}
           type='button'
           className='btn btn-primary'
         >
