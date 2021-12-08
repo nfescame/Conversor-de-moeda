@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Auth } from "./providers/auth";
+import { AuthProviders } from "./providers/index";
 
 // import App from "./App";
 
@@ -10,9 +10,9 @@ import Home from "./page/home";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth>
+    <AuthProviders>
       <Home />
-    </Auth>
+    </AuthProviders>
   </React.StrictMode>,
   document.getElementById("root")
 );

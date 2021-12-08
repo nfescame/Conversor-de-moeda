@@ -1,15 +1,47 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import axios from "axios";
 import CurrencyInput from "react-currency-input-field";
-
-import { AuthContext } from "../../providers/auth";
+import { AuthContext } from "../../providers/index";
+import { listquotes, midlle, exchange } from "../../apis/api";
 
 export default function Home() {
-  const { data, setCurrency, result } = useContext(AuthContext);
+  const { data } = useContext(AuthContext);
+  const [paramsState, setParamsState] = useState({
+    params: { from: "USD", to: "BRL", q: "1.0" },
+  });
+  const [state, setState] = useState();
   const [value, setValue] = useState(1);
 
-  // USD_BRL,BRL_USD
+  // params: { from: "SGD", to: "MYR", q: "1.0" },
   const [select1, setSelect1] = useState("BRL");
   const [select2, setSelect2] = useState("USD");
+
+  useEffect(() => {
+    const options = Object.assign(listquotes, midlle);
+    axios
+      .request(options)
+      .then(function (res) {
+        setState(res.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleClick() {
+    const options = Object.assign(exchange, paramsState, midlle);
+    axios
+      .request(options)
+      .then(function (res) {
+        setValue(res.data);
+        console.log(res.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
 
   function handleChange(e) {
     if (e.target.name === "de") {
@@ -17,17 +49,11 @@ export default function Home() {
     } else {
       setSelect2(e.target.value);
     }
-
-    setCurrency(`${select1}_${select2},${select2}_${select1}`);
-  }
-
-  function calculation() {
-    return <h1>{result * value}result</h1>;
+    console.log(select1, select2);
   }
 
   return (
     <>
-      {calculation()}
       <form
         className='container'
         style={{ width: "100%", border: "solid 1px black" }}
@@ -56,14 +82,16 @@ export default function Home() {
             <select
               name='de'
               className='form-select'
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => {
+                handleChange(e);
+              }}
             >
-              {data
-                ? data.map((item) => {
+              {state
+                ? state.map((item, index) => {
                     return (
                       <>
-                        <option key={item.id} value={item.id}>
-                          {item.currencyName} ({item.id})
+                        <option key={index} value={item}>
+                          {item}
                         </option>
                       </>
                     );
@@ -77,14 +105,16 @@ export default function Home() {
             <select
               name='para'
               className='form-select'
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => {
+                handleChange(e);
+              }}
             >
-              {data
-                ? data.map((item) => {
+              {state
+                ? state.map((item, index) => {
                     return (
                       <>
-                        <option key={item.id} value={item.id}>
-                          {item.currencyName} ({item.id})
+                        <option key={index} value={item}>
+                          {item}
                         </option>
                       </>
                     );
@@ -94,13 +124,7 @@ export default function Home() {
           </div>
         </div>
 
-        <button
-          onClick={() => {
-            calculation();
-          }}
-          type='button'
-          className='btn btn-primary'
-        >
+        <button type='button' className='btn btn-primary' onClick={handleClick}>
           <span>
             <i className='fas fa-redo-alt'></i>
           </span>
