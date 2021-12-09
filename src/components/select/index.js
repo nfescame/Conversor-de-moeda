@@ -36,7 +36,7 @@ export default function SelectComponent(props) {
           {symbols.map((item, index) => {
             return (
               <option key={index} value={item + " " + countrys[index]}>
-                {item} {countrys[index]}
+                {item} ({countrys[index]})
               </option>
             );
           })}
