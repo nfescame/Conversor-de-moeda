@@ -1,3 +1,8 @@
+// 67aa9363109cec5f5f92c5fef55389e2
+
+const api =
+  "http://api.exchangeratesapi.io/v1/symbols?access_key=67aa9363109cec5f5f92c5fef55389e2";
+
 const midlle = {
   headers: {
     "x-rapidapi-host": "currency-exchange.p.rapidapi.com",
@@ -5,15 +10,9 @@ const midlle = {
   },
 };
 
-const listquotes = {
-  method: "GET",
-  url: "https://currency-exchange.p.rapidapi.com/listquotes",
-};
-
 const exchange = {
   method: "GET",
   url: "https://currency-exchange.p.rapidapi.com/exchange",
-  // params: { from: "SGD", to: "MYR", q: "1.0" },
 };
 
-export { listquotes, exchange, midlle };
+export { exchange, midlle, api };

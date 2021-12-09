@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CurrencyInput from "react-currency-input-field";
 
-import { listquotes, midlle, exchange } from "../../apis/api";
+import { midlle, exchange, api } from "../../apis/api";
 
 import SelectComponent from "../../components/select";
 
+import { AuthContext } from "../../providers/index";
+
 export default function Home() {
-  const [state, setState] = useState(["BRL"]);
+  const { select1, select2, paramsState } = useContext(AuthContext);
+  const [symbols, setSymbols] = useState([]);
+  const [country, setCountry] = useState([]);
   const [inputValue, setInputValueValue] = useState(1);
-  // params: { from: "SGD", to: "MYR", q: "1.0" },
-  const [select1, setSelect1] = useState("BRL");
-  const [select2, setSelect2] = useState("BRL");
-  const [paramsState, setParamsState] = useState({
-    params: { from: select1, to: select2, q: "1.0" },
-  });
   const [result, setResult] = useState();
 
   useEffect(() => {
-    const options = Object.assign(listquotes, midlle);
     axios
-      .request(options)
+      .request(api)
       .then(function (res) {
-        setState([...state, ...res.data]);
+        setSymbols(Object.keys(res.data.symbols));
+        setCountry(Object.values(res.data.symbols));
       })
       .catch(function (error) {
         console.error(error);
@@ -32,14 +30,12 @@ export default function Home() {
   }, []);
 
   const handleClick = async () => {
-    console.log(paramsState);
-    setParamsState({ params: { from: select1, to: select2, q: "1.0" } });
     const options = Object.assign(exchange, paramsState, midlle);
+
     axios
       .request(options)
       .then(function (res) {
         setResult(res.data);
-        console.log(res.data);
       })
       .catch(function (error) {
         console.error(error);
@@ -48,17 +44,23 @@ export default function Home() {
 
   function calculation() {
     const calc = result * inputValue;
-    return calc;
+    return calc.toFixed(2);
   }
 
   return (
-    <>
+    <div className='container mb-5'>
       <form
-        className='container'
-        style={{ width: "100%", border: "solid 1px black" }}
+        className='container mt-5 mb-5 p-4'
+        style={{
+          width: "100%",
+          border: "solid 1px white",
+          borderRadius: "10px",
+          backgroundColor: "#ffffff",
+          boxShadow: "2px 2px 20px 1px rgba(0, 0, 0, 0.6)",
+        }}
       >
-        <div className='row'>
-          <div className='col-12'>
+        <div className='row g-3'>
+          <div className='col-md-3'>
             <label className='form-label'>Valor</label>
             <CurrencyInput
               prefix='$'
@@ -73,29 +75,48 @@ export default function Home() {
           </div>
 
           <SelectComponent
-            setSelect={setSelect1}
-            setParamsState={setParamsState}
-            state={state}
+            country={country}
+            symbols={symbols}
             text={"Converter de"}
             name={"de"}
           />
 
           <SelectComponent
-            setSelect={setSelect2}
-            setParamsState={setParamsState}
-            state={state}
+            country={country}
+            symbols={symbols}
             text={"Para"}
             name={"para"}
           />
+          <div className='col-md-1 mt-5'>
+            <button
+              type='button'
+              className='btn btn-primary mb-2 p-1 w-100'
+              onClick={handleClick}
+            >
+              <span>
+                <i className='fas fa-redo-alt'></i>
+              </span>
+            </button>
+          </div>
         </div>
-
-        <button type='button' className='btn btn-primary' onClick={handleClick}>
-          <span>
-            <i className='fas fa-redo-alt'></i>
-          </span>
-        </button>
       </form>
-      <h1>{calculation()}</h1>
-    </>
+
+      <div
+        className='container d-flex justify-content-center'
+        style={{
+          width: "100%",
+          border: "solid 1px white",
+          backgroundColor: "#ffffff",
+          borderRadius: "10px",
+          boxShadow: "2px 2px 20px 1px rgba(0, 0, 0, 0.6)",
+        }}
+      >
+        <div className='row p-4'>
+          <h1 className='col-12'>
+            ${inputValue} {select1} = ${calculation()} {select2}
+          </h1>
+        </div>
+      </div>
+    </div>
   );
 }
