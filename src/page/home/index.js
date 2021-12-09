@@ -1,27 +1,28 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CurrencyInput from "react-currency-input-field";
-import { AuthContext } from "../../providers/index";
+
 import { listquotes, midlle, exchange } from "../../apis/api";
 
-export default function Home() {
-  const { data } = useContext(AuthContext);
-  const [paramsState, setParamsState] = useState({
-    params: { from: "USD", to: "BRL", q: "1.0" },
-  });
-  const [state, setState] = useState();
-  const [value, setValue] = useState(1);
+import SelectComponent from "../../components/select";
 
+export default function Home() {
+  const [state, setState] = useState(["BRL"]);
+  const [inputValue, setInputValueValue] = useState(1);
   // params: { from: "SGD", to: "MYR", q: "1.0" },
   const [select1, setSelect1] = useState("BRL");
-  const [select2, setSelect2] = useState("USD");
+  const [select2, setSelect2] = useState("BRL");
+  const [paramsState, setParamsState] = useState({
+    params: { from: select1, to: select2, q: "1.0" },
+  });
+  const [result, setResult] = useState();
 
   useEffect(() => {
     const options = Object.assign(listquotes, midlle);
     axios
       .request(options)
       .then(function (res) {
-        setState(res.data);
+        setState([...state, ...res.data]);
       })
       .catch(function (error) {
         console.error(error);
@@ -30,26 +31,24 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClick() {
+  const handleClick = async () => {
+    console.log(paramsState);
+    setParamsState({ params: { from: select1, to: select2, q: "1.0" } });
     const options = Object.assign(exchange, paramsState, midlle);
     axios
       .request(options)
       .then(function (res) {
-        setValue(res.data);
+        setResult(res.data);
         console.log(res.data);
       })
       .catch(function (error) {
         console.error(error);
       });
-  }
+  };
 
-  function handleChange(e) {
-    if (e.target.name === "de") {
-      setSelect1(e.target.value);
-    } else {
-      setSelect2(e.target.value);
-    }
-    console.log(select1, select2);
+  function calculation() {
+    const calc = result * inputValue;
+    return calc;
   }
 
   return (
@@ -59,7 +58,7 @@ export default function Home() {
         style={{ width: "100%", border: "solid 1px black" }}
       >
         <div className='row'>
-          <div className='col-6'>
+          <div className='col-12'>
             <label className='form-label'>Valor</label>
             <CurrencyInput
               prefix='$'
@@ -69,59 +68,25 @@ export default function Home() {
               placeholder='Please enter a Value'
               defaultValue={1}
               decimalsLimit={2}
-              onValueChange={(value) => setValue(value)}
+              onValueChange={(value) => setInputValueValue(value)}
             />
           </div>
-          <div className='col-6'>
-            <label className='form-label'>Data da cotação</label>
-            <input type='text' className='form-control' />
-          </div>
 
-          <div className='col-6'>
-            <label className='form-label'>Converter de </label>
-            <select
-              name='de'
-              className='form-select'
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            >
-              {state
-                ? state.map((item, index) => {
-                    return (
-                      <>
-                        <option key={index} value={item}>
-                          {item}
-                        </option>
-                      </>
-                    );
-                  })
-                : null}
-            </select>
-          </div>
+          <SelectComponent
+            setSelect={setSelect1}
+            setParamsState={setParamsState}
+            state={state}
+            text={"Converter de"}
+            name={"de"}
+          />
 
-          <div className='col -6'>
-            <label className='form-label'>para</label>
-            <select
-              name='para'
-              className='form-select'
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            >
-              {state
-                ? state.map((item, index) => {
-                    return (
-                      <>
-                        <option key={index} value={item}>
-                          {item}
-                        </option>
-                      </>
-                    );
-                  })
-                : null}
-            </select>
-          </div>
+          <SelectComponent
+            setSelect={setSelect2}
+            setParamsState={setParamsState}
+            state={state}
+            text={"Para"}
+            name={"para"}
+          />
         </div>
 
         <button type='button' className='btn btn-primary' onClick={handleClick}>
@@ -130,6 +95,7 @@ export default function Home() {
           </span>
         </button>
       </form>
+      <h1>{calculation()}</h1>
     </>
   );
 }

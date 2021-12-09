@@ -6,12 +6,12 @@ import { AuthProviders } from "./providers/index";
 
 // import App from "./App";
 
-import Home from "./page/home";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProviders>
-      <Home />
+      <App />
     </AuthProviders>
   </React.StrictMode>,
   document.getElementById("root")
