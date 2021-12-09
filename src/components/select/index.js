@@ -33,15 +33,13 @@ export default function SelectComponent(props) {
             changeSelect(e);
           }}
         >
-          {symbols
-            ? symbols.map((item, index) => {
-                return (
-                  <option key={index} value={item + " " + countrys[index]}>
-                    {item} {countrys[index]}
-                  </option>
-                );
-              })
-            : null}
+          {symbols.map((item, index) => {
+            return (
+              <option key={index} value={item + " " + countrys[index]}>
+                {item} {countrys[index]}
+              </option>
+            );
+          })}
         </select>
       </div>
     </>
