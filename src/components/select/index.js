@@ -3,15 +3,22 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../providers";
 
 export default function SelectComponent(props) {
-  const { setSelect1, setSelect2 } = useContext(AuthContext);
-  const { country, symbols, text, name } = props;
+  const { setSelect1, setSelect2, setCountry1, setCountry2 } =
+    useContext(AuthContext);
+  const { countrys, symbols, text, name, setResult } = props;
 
   function changeSelect(e) {
+    const symb = e.target.value.split(" ", 1);
+    const country = e.target.value.split(3);
+
     if (e.target.name === "de") {
-      setSelect1(e.target.value);
+      setSelect1(symb);
+      setCountry1(country);
     } else {
-      setSelect2(e.target.value);
+      setSelect2(symb);
+      setCountry2(country);
     }
+    setResult(0);
   }
   return (
     <>
@@ -29,11 +36,9 @@ export default function SelectComponent(props) {
           {symbols
             ? symbols.map((item, index) => {
                 return (
-                  <>
-                    <option key={index} value={item}>
-                      {item} {country[index]}
-                    </option>
-                  </>
+                  <option key={index} value={item + " " + countrys[index]}>
+                    {item} {countrys[index]}
+                  </option>
                 );
               })
             : null}

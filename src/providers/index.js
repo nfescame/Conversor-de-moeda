@@ -6,6 +6,8 @@ export const AuthProviders = (props) => {
   const title = "Currency Exchange / Escame";
   const [select1, setSelect1] = useState("BRL");
   const [select2, setSelect2] = useState("BRL");
+  const [country1, setCountry1] = useState("AED United Arab Emirates Dirham");
+  const [country2, setCountry2] = useState("AED United Arab Emirates Dirham");
   const [paramsState, setParamsState] = useState({
     params: { from: select1, to: select2, q: "1.0" },
   });
@@ -26,6 +28,10 @@ export const AuthProviders = (props) => {
         select2,
         setParamsState,
         paramsState,
+        country1,
+        country2,
+        setCountry1,
+        setCountry2,
       }}
     >
       {props.children}
