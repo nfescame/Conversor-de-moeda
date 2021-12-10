@@ -1,6 +1,3 @@
-const api =
-  "http://api.exchangeratesapi.io/v1/symbols?access_key=67aa9363109cec5f5f92c5fef55389e2";
-
 const apiHTTPS =
   "https://v6.exchangerate-api.com/v6/c9e7474501fad108d5865bf6/codes";
 const midlle = {

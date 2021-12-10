@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CurrencyInput from "react-currency-input-field";
 
-import { midlle, exchange, api, apiHTTPS } from "../../apis/api";
+import { midlle, exchange, apiHTTPS } from "../../apis/api";
 
 import SelectComponent from "../../components/select";
 
