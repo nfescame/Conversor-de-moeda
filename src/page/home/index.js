@@ -12,7 +12,6 @@ import { AuthContext } from "../../providers/index";
 export default function Home() {
   const { paramsState, country1, country2 } = useContext(AuthContext);
   const [symbols, setSymbols] = useState([]);
-  const [timeLast, setTimeLast] = useState("");
   const [inputValue, setInputValueValue] = useState(1);
   const [result, setResult] = useState();
 
@@ -53,6 +52,19 @@ export default function Home() {
   function calculationReverse() {
     const reverse = 1 / result;
     return reverse;
+  }
+  function dateNow() {
+    const data = new Date();
+
+    const dia = String(data.getDate()).padStart(2, "0");
+
+    const mes = String(data.getMonth() + 1).padStart(2, "0");
+
+    const ano = data.getFullYear();
+
+    const dataAtual = dia + "/" + mes + "/" + ano;
+
+    return dataAtual;
   }
 
   return (
@@ -165,7 +177,7 @@ export default function Home() {
           </div>
           <p>
             <b>Data cotação utilizada: </b>
-            {timeLast}
+            {dateNow()}
           </p>
           <p>
             <b>Taxa: </b>
