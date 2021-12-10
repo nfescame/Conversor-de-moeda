@@ -25,12 +25,12 @@ export default function SelectComponent(props) {
   return (
     <>
       <div className='col-md-4'>
-        <label className='form-label' style={{ color: "red" }}>
+        <label className='form-label' style={{ color: "#013F50" }}>
           {text}
         </label>
         <select
           name={name}
-          className='form-select'
+          className='form-select p-3'
           onChange={(e) => {
             changeSelect(e);
           }}

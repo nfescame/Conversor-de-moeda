@@ -1,4 +1,4 @@
-const apiHTTPS =
+const apiSymbols =
   "https://v6.exchangerate-api.com/v6/c9e7474501fad108d5865bf6/codes";
 const midlle = {
   headers: {
@@ -12,4 +12,7 @@ const exchange = {
   url: "https://currency-exchange.p.rapidapi.com/exchange",
 };
 
-export { exchange, midlle, apiHTTPS };
+const exchangeBRLAll =
+  "https://v6.exchangerate-api.com/v6/c9e7474501fad108d5865bf6/latest/USD";
+
+export { exchange, midlle, apiSymbols, exchangeBRLAll };
