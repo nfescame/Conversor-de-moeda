@@ -1,6 +1,8 @@
 const api =
-  "http://api.exchangeratesapi.io/v1/symbols?access_key=67aa9363109cec5f5f92c5fef55389e2&format=1/data/180/' instead of: '/data/180";
+  "http://api.exchangeratesapi.io/v1/symbols?access_key=67aa9363109cec5f5f92c5fef55389e2";
 
+const apiHTTPS =
+  "https://v6.exchangerate-api.com/v6/c9e7474501fad108d5865bf6/codes";
 const midlle = {
   headers: {
     "x-rapidapi-host": "currency-exchange.p.rapidapi.com",
@@ -13,4 +15,4 @@ const exchange = {
   url: "https://currency-exchange.p.rapidapi.com/exchange",
 };
 
-export { exchange, midlle, api };
+export { exchange, midlle, api, apiHTTPS };

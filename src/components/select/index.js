@@ -5,11 +5,13 @@ import { AuthContext } from "../../providers";
 export default function SelectComponent(props) {
   const { setSelect1, setSelect2, setCountry1, setCountry2 } =
     useContext(AuthContext);
-  const { countrys, symbols, text, name, setResult } = props;
+  const { symbols, text, name, setResult } = props;
 
   function changeSelect(e) {
-    const symb = e.target.value.split(" ", 1);
-    const country = e.target.value.split(3);
+    console.log(e.target.value);
+    const symb = e.target.value.split(",", 1);
+    const country = e.target.value.split(",");
+    console.log(symb, country);
 
     if (e.target.name === "de") {
       setSelect1(symb);
@@ -35,8 +37,8 @@ export default function SelectComponent(props) {
         >
           {symbols.map((item, index) => {
             return (
-              <option key={index} value={item + " " + countrys[index]}>
-                {item} ({countrys[index]})
+              <option key={index} value={item}>
+                {item[0]} ({item[1]})
               </option>
             );
           })}

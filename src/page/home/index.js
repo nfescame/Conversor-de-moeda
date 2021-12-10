@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CurrencyInput from "react-currency-input-field";
 
-import { midlle, exchange, api } from "../../apis/api";
+import { midlle, exchange, api, apiHTTPS } from "../../apis/api";
 
 import SelectComponent from "../../components/select";
 
@@ -12,16 +12,14 @@ import { AuthContext } from "../../providers/index";
 export default function Home() {
   const { paramsState, country1, country2 } = useContext(AuthContext);
   const [symbols, setSymbols] = useState([]);
-  const [countrys, setCountrys] = useState([]);
-  const [inputValue, setInputValueValue] = useState();
+  const [inputValue, setInputValueValue] = useState(1);
   const [result, setResult] = useState();
 
   useEffect(() => {
     axios
-      .request(api)
+      .request(apiHTTPS)
       .then(function (res) {
-        setSymbols(Object.keys(res.data.symbols));
-        setCountrys(Object.values(res.data.symbols));
+        setSymbols(res.data.supported_codes);
       })
       .catch(function (error) {
         console.error(error);
@@ -73,7 +71,7 @@ export default function Home() {
               id='input-example'
               name='input-name'
               placeholder='Please enter a Value'
-              defaultValue={""}
+              defaultValue={1}
               decimalsLimit={2}
               onValueChange={(value) => setInputValueValue(value)}
             />
@@ -81,7 +79,6 @@ export default function Home() {
 
           <SelectComponent
             setResult={setResult}
-            countrys={countrys}
             symbols={symbols}
             text={"Convert from"}
             name={"de"}
@@ -89,7 +86,6 @@ export default function Home() {
 
           <SelectComponent
             setResult={setResult}
-            countrys={countrys}
             symbols={symbols}
             text={"To"}
             name={"para"}
@@ -120,11 +116,11 @@ export default function Home() {
       >
         <div className='row p-4' style={{ textAlign: "center" }}>
           <h2>
-            ${inputValue}.00 {country1}
+            ${inputValue}.00 {country1[1]}
           </h2>
           <h2 style={{ color: "red" }}>=</h2>{" "}
           <h2>
-            ${calculation()} {country2}
+            ${calculation()} {country2[1]}
           </h2>
         </div>
       </div>
