@@ -1,0 +1,17 @@
+.containerForm {
+  width: 100%;
+  border: solid 1px white;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.6);
+}
+
+.containerForm button {
+  background-color: #013f50;
+  color: white;
+  height: 3.5rem;
+}
+
+.containerForm button:hover {
+  background-color: #598c9b;
+}

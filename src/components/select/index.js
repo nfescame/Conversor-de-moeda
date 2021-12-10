@@ -8,10 +8,8 @@ export default function SelectComponent(props) {
   const { symbols, text, name, setResult } = props;
 
   function changeSelect(e) {
-    console.log(e.target.value);
     const symb = e.target.value.split(",", 1);
     const country = e.target.value.split(",");
-    console.log(symb, country);
 
     if (e.target.name === "de") {
       setSelect1(symb);
@@ -35,13 +33,15 @@ export default function SelectComponent(props) {
             changeSelect(e);
           }}
         >
-          {symbols.map((item, index) => {
-            return (
-              <option key={index} value={item}>
-                {item[0]} ({item[1]})
-              </option>
-            );
-          })}
+          {symbols
+            ? symbols.map((item, index) => {
+                return (
+                  <option key={index} value={item}>
+                    {item[0]} ({item[1]})
+                  </option>
+                );
+              })
+            : null}
         </select>
       </div>
     </>
