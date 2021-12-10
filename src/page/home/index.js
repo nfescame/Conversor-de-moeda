@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CurrencyInput from "react-currency-input-field";
 
-import { midlle, exchange, apiSymbols, exchangeBRLAll } from "../../apis/api";
+import { midlle, exchange, apiSymbols } from "../../apis/api";
 
 import SelectComponent from "../../components/select";
 
@@ -12,7 +12,6 @@ import { AuthContext } from "../../providers/index";
 export default function Home() {
   const { paramsState, country1, country2 } = useContext(AuthContext);
   const [symbols, setSymbols] = useState([]);
-  const [currencyBRL, setCurrencyBRL] = useState([]);
   const [timeLast, setTimeLast] = useState("");
   const [inputValue, setInputValueValue] = useState(1);
   const [result, setResult] = useState();
@@ -22,16 +21,6 @@ export default function Home() {
       .request(apiSymbols)
       .then(function (res) {
         setSymbols(res.data.supported_codes);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-
-    axios
-      .request(exchangeBRLAll)
-      .then(function (res) {
-        setCurrencyBRL(Object.entries(res.data.conversion_rates));
-        setTimeLast(res.data.time_last_update_utc);
       })
       .catch(function (error) {
         console.error(error);
