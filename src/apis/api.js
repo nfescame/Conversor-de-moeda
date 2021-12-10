@@ -12,4 +12,4 @@ const exchange = {
   url: "https://currency-exchange.p.rapidapi.com/exchange",
 };
 
-export { exchange, midlle, api, apiHTTPS };
+export { exchange, midlle, apiHTTPS };
