@@ -8,7 +8,7 @@ import "./style.css";
 
 export default function Form(props) {
   const { setInputValueValue, setResult, handleClick } = props;
-  const [symbols, setSymbols] = useState([]);
+  const [symbols, setSymbols] = useState();
 
   useEffect(() => {
     axios

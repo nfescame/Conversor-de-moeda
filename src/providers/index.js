@@ -15,12 +15,12 @@ export const AuthProviders = (props) => {
     "United Arab Emirates Dirham",
   ]);
   const [paramsState, setParamsState] = useState({
-    params: { from: select1, to: select2, q: "1.0" },
+    params: { have: select1, want: select2, amount: "1" },
   });
 
   useEffect(() => {
     setParamsState({
-      params: { from: select1, to: select2, q: "1.0" },
+      params: { have: select1, want: select2, amount: "1" },
     });
   }, [select1, select2]);
 

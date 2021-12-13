@@ -11,11 +11,13 @@ export default function SelectComponent(props) {
     const symb = e.target.value.split(",", 1);
     const country = e.target.value.split(",");
 
+    console.log(symb[0]);
+
     if (e.target.name === "de") {
-      setSelect1(symb);
+      setSelect1(symb[0]);
       setCountry1(country);
     } else {
-      setSelect2(symb);
+      setSelect2(symb[0]);
       setCountry2(country);
     }
     setResult(0);

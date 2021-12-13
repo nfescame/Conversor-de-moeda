@@ -19,10 +19,11 @@ export default function Home() {
   const handleClick = async () => {
     const options = Object.assign(exchange, paramsState, midlle);
 
+    console.log(options);
     axios
       .request(options)
       .then(function (res) {
-        setResult(res.data);
+        setResult(res.data.new_amount);
       })
       .catch(function (error) {
         console.error(error);
